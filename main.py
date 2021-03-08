@@ -6,7 +6,9 @@
 ###########################################################################################################
 from DuplicateFileFinder import findDuplicates, printResults
 from FileOrganizer import organizeFiles
+from GUIInterface import showGUI
 import sys
+
 
 ###########################################################################################################
 # Name: main execution entry point
@@ -26,12 +28,12 @@ if __name__ == '__main__':
         # The Path of the directory to be sorted
         #pathConsol = '/Volumes/D1-WDBLACK5TB/Consolidation'
         #pathDest = '/Volumes/D1-WDBLACK5TB/BitBucket'
+        showGUI()
 
-        dups = findDuplicates(pathConsol)
+        #dups = findDuplicates(pathConsol)
+        #printResults(dups)
 
-        printResults(dups)
-
-        organizeFiles(pathConsol, pathDest)
+        #organizeFiles(pathConsol, pathDest)
     else:
         print('Usage: python FileEntropy.py folder1 folder2')
         print('Where: folder1 is the path to the source folder to be consolidated and folder2 is the path to the destination folder that will contain the consolidated files.')
