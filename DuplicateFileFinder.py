@@ -1,12 +1,16 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-# dupFinder.py
+###########################################################################################################
+###########################################################################################################
+# File: DuplicateFileFinder
+# Description:
+###########################################################################################################
+###########################################################################################################
 import os, sys
 import hashlib
 
-
+###########################################################################################################
+# Name: findDup
+# Parameters:
+###########################################################################################################
 def findDup(parentFolder):
     # Dups in format {hash:[names]}
     dups = {}
@@ -24,8 +28,10 @@ def findDup(parentFolder):
                 dups[file_hash] = [file_hash + ': ' + path]
     return dups
 
-
-# Joins two dictionaries
+###########################################################################################################
+# Name: joinDicts # Joins two dictionaries
+# Parameters:
+###########################################################################################################
 def joinDicts(dict1, dict2):
     for key in dict2.keys():
         if key in dict1:
@@ -33,7 +39,10 @@ def joinDicts(dict1, dict2):
         else:
             dict1[key] = dict2[key]
 
-
+###########################################################################################################
+# Name: hashfile
+# Parameters:
+###########################################################################################################
 def hashfile(path, blocksize=65536):
     afile = open(path, 'rb')
     hasher = hashlib.md5()
@@ -44,7 +53,10 @@ def hashfile(path, blocksize=65536):
     afile.close()
     return hasher.hexdigest()
 
-
+###########################################################################################################
+# Name: printResults
+# Parameters:
+###########################################################################################################
 def printResults(dict1):
     results = list(filter(lambda x: len(x) > 1, dict1.values()))
     if len(results) > 0:
@@ -55,10 +67,13 @@ def printResults(dict1):
             for subresult in result:
                 print('\t\t%s' % subresult)
             print('___________________')
-
     else:
         print('No duplicate files found.')
 
+###########################################################################################################
+# Name: findDuplicates
+# Parameters:
+###########################################################################################################
 def findDuplicates(thePath):
     dups = {}
     # Iterate the folders given
@@ -69,9 +84,6 @@ def findDuplicates(thePath):
         print('%s is not a valid path, please verify' % thePath)
         sys.exit()
     printResults(dups)
-
-
-if __name__ == '__main__':
 
 
 # if __name__ == '__main__':
