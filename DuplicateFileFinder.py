@@ -83,7 +83,7 @@ def findDuplicates(thePath):
     else:
         print('%s is not a valid path, please verify' % thePath)
         sys.exit()
-    printResults(dups)
+    return dups
 
 
 ###########################################################################################################
