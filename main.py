@@ -6,9 +6,8 @@
 ###########################################################################################################
 from DuplicateFileFinder import findDuplicates, printResults
 from FileOrganizer import organizeFiles
-from GUIInterface import showGUI
+from GUIInterface import showGUI, askSourceDirectory
 import sys
-
 
 ###########################################################################################################
 # Name: main execution entry point
@@ -29,6 +28,7 @@ if __name__ == '__main__':
         #pathConsol = '/Volumes/D1-WDBLACK5TB/Consolidation'
         #pathDest = '/Volumes/D1-WDBLACK5TB/BitBucket'
         showGUI()
+        #print(f"Source Folder: {askSourceDirectory()}")
 
         #dups = findDuplicates(pathConsol)
         #printResults(dups)
