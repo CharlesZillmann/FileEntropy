@@ -1,3 +1,9 @@
+###########################################################################################################
+###########################################################################################################
+# File: FileOrganizer
+# Description:
+###########################################################################################################
+###########################################################################################################
 from pathlib import Path
 import os
 import shutil
@@ -52,6 +58,10 @@ FILE_FORMATS = {file_format: directory
 				for directory, file_formats in DIRECTORIES.items()
 				for file_format in file_formats}
 
+###########################################################################################################
+# Name: remove_empty_directories
+# Parameters:
+###########################################################################################################
 def remove_empty_directories( thePath ):
 
 	os.chdir(thePath)
@@ -63,6 +73,10 @@ def remove_empty_directories( thePath ):
 		except:
 			pass
 
+###########################################################################################################
+# Name: consolidate_files_groups
+# Parameters:
+###########################################################################################################
 def consolidate_files_groups():
 	myMiscFileCount = 0
 	for entry in os.scandir():
@@ -80,6 +94,10 @@ def consolidate_files_groups():
 			directory_path.mkdir(exist_ok=True)
 			file_path.rename(directory_path.joinpath(file_path))
 
+###########################################################################################################
+# Name: consolidate_files_in_directory
+# Parameters:
+###########################################################################################################
 def consolidate_files_in_directory( thePath ):
 	os.chdir(thePath)
 	print(os.getcwd())
@@ -96,6 +114,10 @@ def consolidate_files_in_directory( thePath ):
 				except:
 					pass
 
+###########################################################################################################
+# Name: organize_groups_into_subgroups
+# Parameters:
+###########################################################################################################
 def organize_groups_into_subgroups( thePath ):
 	# This populates a list with the filenames in the directory
 	list_ = os.listdir(thePath)
@@ -117,6 +139,10 @@ def organize_groups_into_subgroups( thePath ):
 			os.makedirs(thePath + '/' + ext)
 			shutil.move(thePath + '/' + file_, thePath + '/' + ext + '/' + file_)
 
+###########################################################################################################
+# Name: makeSubgroupFolders
+# Parameters:
+###########################################################################################################
 def makeSubgroupFolders() :
     directory_path = Path(pathDest)
     directory_path.mkdir(exist_ok=True)
@@ -154,6 +180,10 @@ def makeSubgroupFolders() :
     directory_path = Path(pathSHELL)
     directory_path.mkdir(exist_ok=True)
 
+###########################################################################################################
+# Name: organizeSubgroups
+# Parameters:
+###########################################################################################################
 def organizeSubgroups ():
     makeSubgroupFolders()
     organize_groups_into_subgroups(pathHTML)
@@ -169,6 +199,10 @@ def organizeSubgroups ():
     organize_groups_into_subgroups(pathEXE)
     organize_groups_into_subgroups(pathSHELL)
 
+###########################################################################################################
+# Name: organizeFiles
+# Parameters:
+###########################################################################################################
 def organizeFiles():
     path = os.getcwd()
     print(path)
@@ -183,6 +217,12 @@ def organizeFiles():
     consolidate_files_in_directory( pathConsol )
     organizeSubgroups()
 
+
+###########################################################################################################
+###########################################################################################################
+#                                             End File
+###########################################################################################################
+###########################################################################################################
 
 # directory_path = Path(pathMISC)
 # directory_path.mkdir(exist_ok=True)
