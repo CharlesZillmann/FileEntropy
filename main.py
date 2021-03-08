@@ -24,7 +24,7 @@ if __name__ == '__main__':
         print(f"Destination Folder: {pathDest}")
 
         # The Path of the directory to be sorted
-        # path 			= '/Volumes/D1-WDBLACK5TB/Pictures'
+        # path 	 		= '/Volumes/D1-WDBLACK5TB/Pictures'
         #pathConsol = '/Volumes/D1-WDBLACK5TB/Consolidation'
         #pathDest = '/Volumes/D1-WDBLACK5TB/BitBucket'
 
