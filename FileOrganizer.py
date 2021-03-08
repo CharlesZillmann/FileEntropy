@@ -8,25 +8,6 @@ from pathlib import Path
 import os
 import shutil
 
-# The Path of the directory to be sorted
-path 			= '/Volumes/D1-WDBLACK5TB/Pictures'
-
-pathConsol 		= '/Volumes/D1-WDBLACK5TB/Consolidation'
-pathDest 		= '/Volumes/D1-WDBLACK5TB/BitBucket'
-
-pathHTML 		= '/Volumes/D1-WDBLACK5TB/BitBucket/HTML'
-pathIMAGES 		= '/Volumes/D1-WDBLACK5TB/BitBucket/IMAGES'
-pathVIDEOS 		= '/Volumes/D1-WDBLACK5TB/BitBucket/VIDEOS'
-pathDOCUMENTS 	= '/Volumes/D1-WDBLACK5TB/BitBucket/DOCUMENTS'
-pathARCHIVES 	= '/Volumes/D1-WDBLACK5TB/BitBucket/ARCHIVES'
-pathAUDIO 		= '/Volumes/D1-WDBLACK5TB/BitBucket/AUDIO'
-pathPLAINTEXT 	= '/Volumes/D1-WDBLACK5TB/BitBucket/PLAINTEXT'
-pathPDF 		= '/Volumes/D1-WDBLACK5TB/BitBucket/PDF'
-pathCODE 		= '/Volumes/D1-WDBLACK5TB/BitBucket/CODE'
-pathXML 		= '/Volumes/D1-WDBLACK5TB/BitBucket/XML'
-pathEXE 		= '/Volumes/D1-WDBLACK5TB/BitBucket/EXE'
-pathSHELL 		= '/Volumes/D1-WDBLACK5TB/BitBucket/SHELL'
-pathMISC 		= '/Volumes/D1-WDBLACK5TB/BitBucket/MISC'
 
 
 DIRECTORIES = {
@@ -63,7 +44,6 @@ FILE_FORMATS = {file_format: directory
 # Parameters:
 ###########################################################################################################
 def remove_empty_directories( thePath ):
-
 	os.chdir(thePath)
 	print(os.getcwd())
 
@@ -77,7 +57,8 @@ def remove_empty_directories( thePath ):
 # Name: consolidate_files_groups
 # Parameters:
 ###########################################################################################################
-def consolidate_files_groups():
+def consolidate_files_groups( pathDest ):
+	pathMISC = pathDest + '/MISC'
 	myMiscFileCount = 0
 	for entry in os.scandir():
 		if entry.is_dir():
@@ -98,17 +79,17 @@ def consolidate_files_groups():
 # Name: consolidate_files_in_directory
 # Parameters:
 ###########################################################################################################
-def consolidate_files_in_directory( thePath ):
-	os.chdir(thePath)
+def consolidate_files_in_directory( pathConsol, pathDest ):
+	os.chdir(pathConsol)
 	print(os.getcwd())
 
-	for root,d_names,f_names in os.walk(thePath):
+	for root,d_names,f_names in os.walk(pathConsol):
 		for d in d_names:
 			myPath = os.path.join(root, d)
 			if os.path.isdir( myPath ):
 				os.chdir(myPath)
 				print(os.getcwd())
-				consolidate_files_groups()
+				consolidate_files_groups( pathDest )
 				try:
 					os.rmdir(myPath)
 				except:
@@ -140,70 +121,31 @@ def organize_groups_into_subgroups( thePath ):
 			shutil.move(thePath + '/' + file_, thePath + '/' + ext + '/' + file_)
 
 ###########################################################################################################
-# Name: makeSubgroupFolders
+# Name: getDirectoryPaths
 # Parameters:
 ###########################################################################################################
-def makeSubgroupFolders() :
-    directory_path = Path(pathDest)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathIMAGES)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathVIDEOS)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathDOCUMENTS)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathARCHIVES)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathAUDIO)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathPLAINTEXT)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathPDF)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathCODE)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathXML)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathEXE)
-    directory_path.mkdir(exist_ok=True)
-
-    directory_path = Path(pathSHELL)
-    directory_path.mkdir(exist_ok=True)
+def getDestDirectoryPaths( pathDest ):
+	myPaths = []
+	for key in DIRECTORIES.keys():
+		myPaths.append(pathDest + "/" + key)
+	myPaths.append(pathDest + "/MISC")
+	return myPaths
 
 ###########################################################################################################
 # Name: organizeSubgroups
 # Parameters:
 ###########################################################################################################
-def organizeSubgroups ():
-    makeSubgroupFolders()
-    organize_groups_into_subgroups(pathHTML)
-    organize_groups_into_subgroups(pathIMAGES)
-    organize_groups_into_subgroups(pathVIDEOS)
-    organize_groups_into_subgroups(pathDOCUMENTS)
-    organize_groups_into_subgroups(pathARCHIVES)
-    organize_groups_into_subgroups(pathAUDIO)
-    organize_groups_into_subgroups(pathPLAINTEXT)
-    organize_groups_into_subgroups(pathPDF)
-    organize_groups_into_subgroups(pathCODE)
-    organize_groups_into_subgroups(pathXML)
-    organize_groups_into_subgroups(pathEXE)
-    organize_groups_into_subgroups(pathSHELL)
+def organizeSubgroups ( pathDest):
+	directory_path = Path(pathDest)
+	for myPath in getDestDirectoryPaths( pathDest ):
+		directory_path.mkdir(exist_ok=True)
+		organize_groups_into_subgroups( myPath )
 
 ###########################################################################################################
 # Name: organizeFiles
 # Parameters:
 ###########################################################################################################
-def organizeFiles():
+def organizeFiles( pathConsol, pathDest ):
     path = os.getcwd()
     print(path)
     # /Users/mbp/Documents/my-project/python-snippets/notebook
@@ -214,8 +156,8 @@ def organizeFiles():
     directory_path.mkdir(exist_ok=True)
     print(directory_path)
 
-    consolidate_files_in_directory( pathConsol )
-    organizeSubgroups()
+    consolidate_files_in_directory( pathConsol, pathDest )
+    organizeSubgroups( pathDest )
 
 
 ###########################################################################################################

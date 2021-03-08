@@ -12,10 +12,13 @@ from FileOrganizer import organizeFiles
 # Parameters:
 ###########################################################################################################
 if __name__ == '__main__':
-    pathConsolidation = '/Volumes/D1-WDBLACK5TB/Consolidation'
-    findDuplicates( pathConsolidation )
+    # The Path of the directory to be sorted
+    # path 			= '/Volumes/D1-WDBLACK5TB/Pictures'
+    pathConsol 	= '/Volumes/D1-WDBLACK5TB/Consolidation'
+    pathDest    = '/Volumes/D1-WDBLACK5TB/BitBucket'
 
-    organizeFiles()
+    findDuplicates( pathConsol )
+    organizeFiles( pathConsol, pathDest )
 
 
 # if __name__ == '__main__':
