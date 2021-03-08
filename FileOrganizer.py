@@ -1,18 +1,19 @@
-###########################################################################################################
-###########################################################################################################
+#####################################################################################################################
+#####################################################################################################################
 # File: FileOrganizer
 # Description:
-###########################################################################################################
-###########################################################################################################
+#####################################################################################################################
+#####################################################################################################################
 from pathlib import Path
 import os
 import shutil
 
-
+#####################################################################################################################
+# Variables and Data Structures
+#####################################################################################################################
 
 DIRECTORIES = {
 	"HTML": [".html5", ".html", ".htm", ".xhtml"],
-
 	"IMAGES": [".jpeg", ".jpg", ".tiff", ".gif", ".bmp", ".png", ".bpg", "svg",
 			".heif", ".psd", ".ico", ".jpe", ".svg", ".ps"],
 	"VIDEOS": [".avi", ".flv", ".wmv", ".mov", ".mp4", ".webm", ".vob", ".mng",
@@ -38,6 +39,10 @@ DIRECTORIES = {
 FILE_FORMATS = {file_format: directory
 				for directory, file_formats in DIRECTORIES.items()
 				for file_format in file_formats}
+
+#####################################################################################################################
+# Code
+#####################################################################################################################
 
 ###########################################################################################################
 # Name: remove_empty_directories
@@ -100,22 +105,19 @@ def consolidate_files_in_directory( pathConsol, pathDest ):
 # Parameters:
 ###########################################################################################################
 def organize_groups_into_subgroups( thePath ):
-	# This populates a list with the filenames in the directory
 	list_ = os.listdir(thePath)
 
-	# Traverses every file
 	for file_ in list_:
 		name, ext = os.path.splitext(file_)
 		print(name + ext)
-		# Stores the extension type
+
 		ext = ext[1:]
-		# If it is directory, it forces the next iteration
+
 		if ext == '':
 			continue
-		# If a directory with the name 'ext' exists, it moves the file to that directory
+
 		if os.path.exists(thePath + '/' + ext):
 			shutil.move(thePath + '/' + file_, thePath + '/' + ext + '/' + file_)
-		# If the directory does not exist, it creates a new directory
 		else:
 			os.makedirs(thePath + '/' + ext)
 			shutil.move(thePath + '/' + file_, thePath + '/' + ext + '/' + file_)
@@ -148,7 +150,6 @@ def organizeSubgroups ( pathDest):
 def organizeFiles( pathConsol, pathDest ):
     path = os.getcwd()
     print(path)
-    # /Users/mbp/Documents/my-project/python-snippets/notebook
     os.chdir(pathConsol)
     print(os.getcwd())
 
@@ -159,15 +160,8 @@ def organizeFiles( pathConsol, pathDest ):
     consolidate_files_in_directory( pathConsol, pathDest )
     organizeSubgroups( pathDest )
 
-
-###########################################################################################################
-###########################################################################################################
+#####################################################################################################################
+#####################################################################################################################
 #                                             End File
-###########################################################################################################
-###########################################################################################################
-
-# directory_path = Path(pathMISC)
-# directory_path.mkdir(exist_ok=True)
-# organize_groups_into_subgroups(pathMISC)
-#
-# remove_empty_directories( pathConsol )
+#####################################################################################################################
+#####################################################################################################################
